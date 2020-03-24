@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr_FR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="lib/mapbox-gl/mapbox-gl.css" />
+    <link rel="stylesheet" href="assets/stylesheets/global.css" />
+
+    <title>Carte imaginaire des transports à Marseille</title>
+  </head>
+  <body>
+    <main>
+      <div id="map"></div>
+    </main>
+
+    <script src="lib/mapbox-gl/mapbox-gl.js"></script>
+
+    <script type="text/javascript">
+      window.ACCESS_TOKEN = 'pk.eyJ1IjoibWF0dGlzZyIsImEiOiJjazg2MmdrcTAwNGE1M2dwNzFiaW01Z2hzIn0.GWi6clQEOgnLDkBPIUJhHQ';
+
+      window.START_ZOOM_LEVEL = 11;
+      window.START_CENTER = [ 5.38, 43.3 ];
+    </script>
+
+    <script src="assets/javascripts/application.js" type="text/javascript" charset="utf-8" async defer></script>
+  </body>
+</html>
