@@ -10,17 +10,17 @@ L.control.scale({
 }).addTo(map);
 
 const SOURCES = {
-  'Bases nautiques': 'marseille_bases_nautiques_plages_2018_vsohc0e.csv',
-  'Équipements sociaux': 'marseille_equipements_sociaux_2018.csv',
-  'Bâtiments institutionnels': 'marseille_batiments_institutionnels_2018.csv',
-  'Équipements sportifs': 'marseille_equipements_sportifs_2018.csv',
-  'Crèches': 'marseille_creches_ukxm5oz.csv',
-  'Lieux culturels': 'marseille_lieux_culturels_2018_jrvozrd.csv',
-  'Écoles élémentaires': 'marseille_ecoles_elementaires_2018.csv',
-  'Monuments historiques': 'marseille_monuments_historiques_2018.csv',
-  'Écoles maternelles': 'marseille_ecoles_maternelles_2018.csv',
-  'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
-  'Résidences CROUS': 'crous-marseille.csv',
+  '🏥 Équipements sociaux': 'marseille_equipements_sociaux_2018.csv',
+  '🏛 Bâtiments institutionnels': 'marseille_batiments_institutionnels_2018.csv',
+  '🏊‍♀️ Bases nautiques': 'marseille_bases_nautiques_plages_2018_vsohc0e.csv',
+  '🌳 Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
+  '🏟 Équipements sportifs': 'marseille_equipements_sportifs_2018.csv',
+  '👶 Crèches': 'marseille_creches_ukxm5oz.csv',
+  '👦 Écoles élémentaires': 'marseille_ecoles_elementaires_2018.csv',
+  '🧒 Écoles maternelles': 'marseille_ecoles_maternelles_2018.csv',
+  '🏨 Résidences CROUS': 'crous-marseille.csv',
+  '🎭 Lieux culturels': 'marseille_lieux_culturels_2018_jrvozrd.csv',
+  '⛪️ Monuments historiques': 'marseille_monuments_historiques_2018.csv',
 };
 
 let layers = {};
