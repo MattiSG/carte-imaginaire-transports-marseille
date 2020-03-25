@@ -4,6 +4,11 @@ L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
   attribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a>'
 }).addTo(map);
 
+L.control.scale({
+  imperial: false,
+  maxWidth: 300,
+}).addTo(map);
+
 const SOURCES = {
   'Bases nautiques': 'marseille_bases_nautiques_plages_2018_vsohc0e.csv',
   'Équipements sociaux': 'marseille_equipements_sociaux_2018.csv',
