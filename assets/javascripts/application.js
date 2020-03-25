@@ -22,8 +22,6 @@ const SOURCES = {
   'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
 };
 
-const dataLayerGroup = L.layerGroup();
-
 let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
@@ -36,7 +34,6 @@ Object.keys(SOURCES).forEach(sourceName => {
       }
     })
   );
-  dataLayerGroup.addLayer(layers[sourceName]);
 });
 
 L.control.layers({}, layers, {
@@ -46,5 +43,15 @@ L.control.layers({}, layers, {
 
 const downloadLink = document.getElementById('download');
 downloadLink.addEventListener('click', e => {
-  downloadLink.href = window.URL.createObjectURL(new Blob([ JSON.stringify(dataLayerGroup.toGeoJSON()) ], {type: 'application/geo+json'}));
+  const activeLayers = L.layerGroup();
+
+  Object.keys(layers)
+    .map(id => layers[id])
+    .filter(map.hasLayer.bind(map))
+    .forEach(activeLayers.addLayer.bind(activeLayers));
+
+  downloadLink.href = window.URL.createObjectURL(new Blob(
+    [ JSON.stringify(activeLayers.toGeoJSON()) ],
+    { type: 'application/geo+json' }
+  ));
 });
