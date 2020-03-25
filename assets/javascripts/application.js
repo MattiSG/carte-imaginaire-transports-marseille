@@ -1,7 +1,7 @@
 const map = L.map('map').setView(window.START_CENTER, window.START_ZOOM_LEVEL);
 
 L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-  attribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a>'
+  attribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a> | <a id="download" download="carte_imaginaire.geojson">Télécharger</a>'
 }).addTo(map);
 
 L.control.scale({
@@ -22,6 +22,8 @@ const SOURCES = {
   'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
 };
 
+const dataLayerGroup = L.layerGroup();
+
 let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
@@ -29,13 +31,20 @@ Object.keys(SOURCES).forEach(sourceName => {
       delimiter: 'auto',
     }, L.geoJson(null, {
       pointToLayer:function(geoJsonPoint, latlng) {
-        return L.circle(latlng, { radius: window.CIRCLE_RADIUS });
+        const linestringCircle = circleToPolygon([ latlng.lng, latlng.lat ], window.CIRCLE_RADIUS);
+        return L.geoJSON(linestringCircle);  // not using L.circle to allow for geojson export as polygons rather than points
       }
     })
   );
-  layers[sourceName].addTo(map);
+  dataLayerGroup.addLayer(layers[sourceName]);
 });
 
 L.control.layers({}, layers, {
   collapsed: false,
 }).addTo(map);
+
+
+const downloadLink = document.getElementById('download');
+downloadLink.addEventListener('click', e => {
+  downloadLink.href = window.URL.createObjectURL(new Blob([ JSON.stringify(dataLayerGroup.toGeoJSON()) ], {type: 'application/geo+json'}));
+});
