@@ -21,8 +21,13 @@ let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
   layers[sourceName] = omnivore.csv(`data/${SOURCES[sourceName]}`, {
-    delimiter: 'auto',
-  });
+      delimiter: 'auto',
+    }, L.geoJson(null, {
+      pointToLayer:function(geoJsonPoint, latlng) {
+        return L.circle(latlng, { radius: 200 });
+      }
+    })
+  );
   layers[sourceName].addTo(map);
 });
 
