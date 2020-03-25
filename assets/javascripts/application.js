@@ -22,6 +22,8 @@ const SOURCES = {
   'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
 };
 
+const isochroneLayer = L.layerGroup();
+
 let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
@@ -29,12 +31,20 @@ Object.keys(SOURCES).forEach(sourceName => {
       delimiter: 'auto',
     }, L.geoJson(null, {
       pointToLayer:function(geoJsonPoint, latlng) {
+        fetch(`https://itineraire.ign.fr/simple/1.0.0/isochrone?resource=bduni-idf-pgr&profile=pedestrian&costType=time&costValue=${window.CIRCLE_RADIUS}&direction=departure&point=${latlng.lng},${latlng.lat}&geometryFormat=geojson`)
+          .then(data => data.json())
+          .then(data => data.geometry)
+          .then(geometry => L.geoJSON(geometry).addTo(isochroneLayer));
+
         const linestringCircle = circleToPolygon([ latlng.lng, latlng.lat ], window.CIRCLE_RADIUS);
+
         return L.geoJSON(linestringCircle);  // not using L.circle to allow for geojson export as polygons rather than points
       }
     })
   );
 });
+
+layers['Isochrones'] = isochroneLayer;
 
 L.control.layers({}, layers, {
   collapsed: false,
