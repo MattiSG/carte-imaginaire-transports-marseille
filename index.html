@@ -19,6 +19,7 @@
       window.START_ZOOM_LEVEL = 11;
       window.START_CENTER = [ 43.3, 5.38 ];
       window.CIRCLE_RADIUS = Number(new URLSearchParams(window.location.search).get('rayon')) || 200;
+      window.MAX_DURATION = (Number(new URLSearchParams(window.location.search).get('duree')) || 10) * 60;
     </script>
 
     <script src="lib/leaflet-omnivore-v0.3.1.min.js"></script>

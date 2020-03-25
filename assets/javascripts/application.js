@@ -22,19 +22,16 @@ const SOURCES = {
   'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
 };
 
-const isochroneLayer = L.layerGroup();
-
 let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
-  layers[sourceName] = omnivore.csv(`data/${SOURCES[sourceName]}`, {
+  const points = [];
+
+  layers[`${sourceName} — isodistances`] = omnivore.csv(`data/${SOURCES[sourceName]}`, {
       delimiter: 'auto',
     }, L.geoJson(null, {
       pointToLayer:function(geoJsonPoint, latlng) {
-        fetch(`https://itineraire.ign.fr/simple/1.0.0/isochrone?resource=bduni-idf-pgr&profile=pedestrian&costType=time&costValue=${window.CIRCLE_RADIUS}&direction=departure&point=${latlng.lng},${latlng.lat}&geometryFormat=geojson`)
-          .then(data => data.json())
-          .then(data => data.geometry)
-          .then(geometry => L.geoJSON(geometry).addTo(isochroneLayer));
+        points.push(latlng);
 
         const linestringCircle = circleToPolygon([ latlng.lng, latlng.lat ], window.CIRCLE_RADIUS);
 
@@ -42,9 +39,12 @@ Object.keys(SOURCES).forEach(sourceName => {
       }
     })
   );
-});
 
-layers['Isochrones'] = isochroneLayer;
+  layers[`${sourceName} — isochrones`] = L.layerGroup().once('add', function() {
+    points.map(getIsochrone)
+      .forEach(promise => promise.then(geojsonLayer => geojsonLayer.addTo(this)))
+  });
+});
 
 L.control.layers({}, layers, {
   collapsed: false,
@@ -65,3 +65,11 @@ downloadLink.addEventListener('click', e => {
     { type: 'application/geo+json' }
   ));
 });
+
+
+function getIsochrone(latlng) {
+  return fetch(`https://itineraire.ign.fr/simple/1.0.0/isochrone?resource=bduni-idf-pgr&profile=pedestrian&costType=time&costValue=${window.MAX_DURATION}&direction=departure&point=${latlng.lng},${latlng.lat}&geometryFormat=geojson`)
+    .then(data => data.json())
+    .then(data => data.geometry)
+    .then(geometry => L.geoJSON(geometry));
+}
