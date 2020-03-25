@@ -1,6 +1,6 @@
 const map = L.map('map').setView(window.START_CENTER, window.START_ZOOM_LEVEL);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
   attribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a>'
 }).addTo(map);
 
