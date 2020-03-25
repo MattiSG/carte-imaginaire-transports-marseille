@@ -1,11 +1,29 @@
-mapboxgl.accessToken = window.ACCESS_TOKEN;
+const map = L.map('map').setView(window.START_CENTER, window.START_ZOOM_LEVEL);
 
-const map = new mapboxgl.Map({
-  center: window.START_CENTER,
-  container: 'map',
-  style: 'mapbox://styles/mattisg/ck5o499g36a751iofydcb4t3l?optimize=true',  // `optimize` option doesn't download unused features and layers
-  zoom: window.START_ZOOM_LEVEL,
-  attributionControl: false,
-}).addControl(new mapboxgl.AttributionControl({
-  customAttribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a>',
-}));
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: 'Données LO <a href="https://www.data.gouv.fr/fr/organizations/ville-de-marseille/" target="_blank">Ville de Marseille</a>'
+}).addTo(map);
+
+const SOURCES = {
+  'Bases nautiques': 'marseille_bases_nautiques_plages_2018_vsohc0e.csv',
+  'Équipements sociaux': 'marseille_equipements_sociaux_2018.csv',
+  'Bâtiments institutionnels': 'marseille_batiments_institutionnels_2018.csv',
+  'Équipements sportifs': 'marseille_equipements_sportifs_2018.csv',
+  'Crèches': 'marseille_creches_ukxm5oz.csv',
+  'Lieux culturels': 'marseille_lieux_culturels_2018_jrvozrd.csv',
+  'Écoles élémentaires': 'marseille_ecoles_elementaires_2018.csv',
+  'Monuments historiques': 'marseille_monuments_historiques_2018.csv',
+  'Écoles maternelles': 'marseille_ecoles_maternelles_2018.csv',
+  'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
+};
+
+let layers = {};
+
+Object.keys(SOURCES).forEach(sourceName => {
+  layers[sourceName] = omnivore.csv(`data/${SOURCES[sourceName]}`);
+  layers[sourceName].addTo(map);
+});
+
+L.control.layers({}, layers, {
+  collapsed: false,
+}).addTo(map);
