@@ -29,7 +29,7 @@ Object.keys(SOURCES).forEach(sourceName => {
       delimiter: 'auto',
     }, L.geoJson(null, {
       pointToLayer:function(geoJsonPoint, latlng) {
-        return L.circle(latlng, { radius: 200 });
+        return L.circle(latlng, { radius: window.CIRCLE_RADIUS });
       }
     })
   );
