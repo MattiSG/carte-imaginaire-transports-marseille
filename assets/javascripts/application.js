@@ -20,6 +20,7 @@ const SOURCES = {
   'Monuments historiques': 'marseille_monuments_historiques_2018.csv',
   'Écoles maternelles': 'marseille_ecoles_maternelles_2018.csv',
   'Parcs et jardins': 'marseille_parcs_jardins_2018.csv',
+  'Résidences CROUS': 'crous-marseille.csv',
 };
 
 let layers = {};

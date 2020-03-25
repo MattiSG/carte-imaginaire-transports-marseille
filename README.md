@@ -10,7 +10,8 @@ Projet porté par Chloé Morisset dans le cadre du dispositif ODEON.
 
 ## Source et licence des données
 
-- [Ville de Marseille](https://www.data.gouv.fr/fr/organizations/ville-de-marseille/), données sous Licence ouverte.
+- Résidences CROUS : Licence ouverte, [CROUS](https://www.data.gouv.fr/fr/datasets/logements-etudiants/).
+- Toutes les autres données : Licence ouverte, [Ville de Marseille](https://www.data.gouv.fr/fr/organizations/ville-de-marseille/).
 
 ## Licence du code
 
