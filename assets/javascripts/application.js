@@ -20,7 +20,9 @@ const SOURCES = {
 let layers = {};
 
 Object.keys(SOURCES).forEach(sourceName => {
-  layers[sourceName] = omnivore.csv(`data/${SOURCES[sourceName]}`);
+  layers[sourceName] = omnivore.csv(`data/${SOURCES[sourceName]}`, {
+    delimiter: 'auto',
+  });
   layers[sourceName].addTo(map);
 });
 
